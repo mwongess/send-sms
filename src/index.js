@@ -1,7 +1,9 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 const { PORT, AFRICAS_TALKING_API_KEY, AFRICAS_TALKING_USERNAME } = process.env;
@@ -13,6 +15,10 @@ const credentials = {
 
 const Africastalking = require("africastalking")(credentials);
 const sms = Africastalking.SMS;
+
+app.get("/", (req, res) => {
+  res.json("Use my api to send short messages");
+});
 
 app.post("/message", async (req, res) => {
   try {
